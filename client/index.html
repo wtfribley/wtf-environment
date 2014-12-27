@@ -19,6 +19,10 @@
 
   <body>
 
+    <div class="grid-frame">
+    <div class="grid-container">
+    <div class="grid-content">
+
     <h1 id="wtf-dev-environment">WTF Dev Environment</h1>
 
     <p>This repository is meant to help folks get a head start on building Node+Angular web applications. It comes with some nifty Gulp tasks, a skeleton Express server ready for your custom middleware and routing, some Sublime Text packages and settings and bunches of other helpful stuff!</p>
@@ -117,11 +121,11 @@
       <li>Download and install Sublime Text 3</li>
       <li>Navigate to Sublime&#39;s configuration directory -- on Linux this is probably <code>~/.config/sublime-text-3/</code>.</li>
       <li>Copy the files from this repository&#39;s <code>sublime</code> directories into their corresponding locations in the Sublime Text config directory.</li>
-      <li>Remove the <code>sublime</code> directory from this repo.
+      <li>Remove the <code>sublime</code> directory from this repo.</li>
       <li>Profit.</li>
     </ol>
 
-    <p>Keep in mind that, because this repository contains <code>.sublime-settings</code> files, they haven't been added to <code>.gitignore</code>. Once you've removed the sublime directory, you may want to add this line to the <code>.gitignore</code> file:
+    <p>Keep in mind that, because this repository contains <code>.sublime-settings</code> files, they haven't been added to <code>.gitignore</code>. Once you've removed the sublime directory, you may want to add this line to the <code>.gitignore</code> file:</p>
 
     <pre><code>*.sublime-*
     </code></pre>
@@ -136,6 +140,10 @@
     <h4 id="foundation-sass">Foundation SASS</h4>
     <p>The main <code>client/sass/app.scss</code> file now specifically includes the Foundation for Apps settings file and main SASS file. Use <code>client/sass/_settings.scss</code> to change the variables Foundation uses to construct its styles.</p>
     <p>Remember that any additional underscored SASS files (like <code>_whatever.scss</code>) do NOT need to be manually imported into <code>client/sass/app.scss</code> -- this is taken care of by the <strong>gulp-sass-deps</strong> plugin.</p>
+
+    </div>
+    </div>
+    </div>
 
   <% if (ENV == 'production') { %>
     <script src="/app/bundle.min.js"></script>
