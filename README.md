@@ -22,6 +22,8 @@ $ gulp
 
 This will build the project and then watch its files -- linting, testing and live-reloading when you change anything.
 
+*NOTE: The default `index.html` file loads two Javascript files: `bundle.js` and `templates.js` -- until you've added some HTML templates to your Angular app under `client/app`, the `templates.js` file will not exist. So don't be alarmed if you see it 404 when you first look at the project.*
+
 For more a detailed look at what you can do with Gulp, here's a quick run-down of all the included tasks.
 
 #### QA (Linting & Testing)
