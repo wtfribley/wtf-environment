@@ -1,0 +1,7 @@
+.swp
+*.swo
+*.log
+*.pyc
+node_modules
+bower_components
+client/build

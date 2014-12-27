@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="wtfEnvironment">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>WTF Dev Environment</title>
+
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+  <% if (ENV == 'production') { %>
+    <link rel="stylesheet" href="/css/app.min.css"/>
+  <% } else { %>
+    <link rel="stylesheet" href="/css/app.css"/>
+  <% } %>
+
+  </head>
+
+  <body>
+
+    <h1 id="wtf-dev-environment">WTF Dev Environment</h1>
+
+    <p>This repository is meant to help folks get a head start on building Node+Angular web applications. It comes with some nifty Gulp tasks, a skeleton Express server ready for your custom middleware and routing, some Sublime Text packages and settings and bunches of other helpful stuff!</p>
+
+    <h4 id="paths">Paths</h4>
+    <p>The first thing to familiarize yourself with is the <code>paths.json</code> file in the root of this repository. It defines glob patterns which Gulp uses to gather up files to be processed by the various tasks. You may customize your project&#39;s structure by altering these paths, although they have been chosen carefully and will work well for a large-scale Angular web application.</p>
+
+    <h2 id="gulp-tasks">Gulp Tasks</h2>
+    <p><a href="http://gulpjs.com/">Gulp</a> is a fantastic streaming build system. The <strong>WTF Dev Environment</strong> comes with some tasks for building and developing an Angular app. To run any of these tasks just issue this command from the repo&#39;s root directory:</p>
+
+    <pre><code>$ gulp [name of task]
+    </code></pre>
+
+    <p>In most cases, before you start working, you&#39;ll simply want to run the default task:</p>
+
+    <pre><code>$ gulp
+    </code></pre>
+
+    <p>This will build the project and then watch its files -- linting, testing and live-reloading when you change anything.</p>
+    <p>For more a detailed look at what you can do with Gulp, here&#39;s a quick run-down of all the included tasks.</p>
+
+    <h4 id="qa-linting-testing-">QA (Linting &amp; Testing)</h4>
+    <p>This repository contains both <code>.jshintrc</code> and <code>.jscsrc</code> files. <a href="http://jshint.com/">JSHint</a> is used to catch language errors -- unused or undefined variables, for example -- while
+    <a href="https://www.npmjs.com/package/jscs">JSCS</a> enforces coding style. Feel free to alter these two configuration files as
+    you see fit.</p>
+    <p>There is also a <code>karma.conf.js</code> file to configure <a href="http://karma-runner.github.io/0.12/index.html">Karma</a>, a front-end test runner.</p>
+    <p>QA tasks are split into client and server groups.</p>
+
+    <ul>
+      <li>
+        <strong>server-qa</strong>
+        <ul>
+          <li><strong>server-lint</strong> run JSHint and JSCS on all server files and server tests.</li>
+          <li><strong>server-unit-test</strong> use Mocha to run all server unit tests.</li>
+          <li><strong>server-e2e-test</strong> use Mocha to run all server end-to-end tests (integration, acceptance, etc.).</li>
+        </ul>
+      </li>
+      <li>
+        <strong>client-qa</strong>
+        <ul>
+          <li><strong>client-lint</strong> run JSHint and JSCS on all client files and client tests.</li>
+          <li><strong>client-unit-test</strong> use Karma to run all client unit tests.</li>
+          <li><strong>client-e2e-test</strong> use Protractor to run Angular end-to-end tests <em>this task is currently <strong>not</strong> implemented</em></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4 id="build">Build</h4>
+    <p>Modern web applications require a build process -- from compiling SASS into CSS, bundling and minifying Javascript, moving other static assets into a publicly-served location, etc. The <strong>WTF Dev Environment</strong> includes build tasks to make this process totally painless.</p>
+    <p><strong>WTF</strong> uses <a href="http://browserify.org/">Browserify</a> to bundle front-end Javascript (e.g. an Angular application -- or, with a little customization, Ember, React, Backbone, etc.). If you&#39;re unfamiliar with Browserify, please check out their documentation. In short, Browserify allows you to break your front-end code into modules just like using Node for back-end code -- it does a bunch of other cool stuff, too, but that bit is the most relevant here. So font-end dependencies are managed via the familiar <code>require</code> syntax.</p>
+
+    <pre><code>var angular = require('../../bower_components/angular/angular');
+    var myModule = require('./path/to/file');
+    </code></pre>
+
+    <p>Check out <code>client/app/app.js</code> to see how this works. And keep in mind, you should always require the full development versions of any dependencies -- the build process will minify the entire Javascript bundle.</p>
+    <p>Here&#39;s a list of build tasks.</p>
+
+    <ul>
+      <li>
+        <strong>build</strong>
+        <ul>
+          <li><strong>browserify</strong> Use Browserify to bundle front-end Javascript, using the <code>CLIENT.APP.ENTRY</code> path from <code>paths.json</code>. This task will also use <code>ngAnnotate</code> to make any Angular dependency injections safe for minification. Finally, the task will produce two files: <code>bundle.js</code> and <code>bundle.min.js</code>.</li>
+          <li><strong>fonts</strong> Copy font files into the build directory.</li>
+          <li><strong>images</strong> Copy images into the build directory.</li>
+          <li><strong>sass</strong> Use libsass (via the <code>gulp-sass &gt; node-sass &gt; libsass</code> chain) to compile SASS into CSS. This task also uses the <code>gulp-sass-deps</code> plugin to automatically maintain a SASS entry file which imports all other SASS files. You can read its documentation to learn more. Finally, both full and minified CSS files are saved into the build directory.</li>
+          <li><strong>templates</strong> Gather all HTML templates (aka &quot;partials&quot;), minify them and use <code>ngHtml2Js</code> to add them to Angular&#39;s template cache. The cached templates will be added to an Angular module matching the name of the project from <code>package.json</code>.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4 id="development">Development</h4>
+    <p>This repository also contains a task to launch the application server, as well as watch all project files to lint, test, build and reload on changes.</p>
+
+    <ul>
+      <li><strong>server</strong> Spawn the application server found at the <code>SERVER.APP.ENTRY</code> path.</li>
+      <li><strong>watch</strong> Watch all files, server and client, linting, testing, building and live-reloading on changes. If any server files (or server tests) are changed, the application server will be restarted.</li>
+    </ul>
+
+    <p>The <strong>watch</strong> task will also launch a LiveReload server. Use a free <a href="http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions">browser extension</a> (or include some extra Javascript) to enable live reloading of CSS, HTML and Javascript.</p>
+
+    <h4 id="gulp-sass-deps">gulp-sass-deps</h4>
+    <p>As mentioned above, this repository includes a Gulp plugin that maintains a SASS &quot;entry&quot; file -- it finds all SASS files beginning with <code>_</code>, creates an <code>@import</code> statement and passes that along to <code>gulp-sass</code>. These means you can create a bunch of modular SASS files, organized by feature in your Angular app, without having to manually <code>@import</code> them all into your main SASS file.</p>
+    <p>Eventually, this plugin will be broken out into its own repository, but it will remain here for now. At that time, more detailed documentation will be written -- for now, the code is well-commented.</p>
+
+    <h2 id="the-server">The Server</h2>
+    <p><strong>WTF Dev Environment</strong> comes with a skeleton <a href="http://expressjs.com/">Express</a> server, configured with some helpful middleware, ready for you to add your own application logic. If you&#39;re using a framework on top of Express (like Loopback), you may need to monkey about with the server side quite a bit -- but for your average Single Page App + simple API, you&#39;ll be all good to go!</p>
+
+    <h4 id="server-views">Server Views</h4>
+    <p>The server is configured to use <code>ejs</code> for templating. The <code>CLIENT.VIEWS</code> path in <code>paths.json</code> points to the directory where Express will look for views to render. In the case of a Single Page App, there may only be an <code>index.html</code> and a set of error pages (error pages should be named for their HTTP status code, like <code>404.html</code> or <code>500.html</code>).</p>
+
+    <h2 id="sublime-text">Sublime Text</h2>
+    <p><a href="http://www.sublimetext.com/3">Sublime Text 3</a> is a pretty fantastic editor. This repo includes the Package Control plugin, as well as some settings which will automatically install several other useful plugins. Simply follow these steps to set up Sublime Text the <strong>WTF</strong> way.</p>
+
+    <ol>
+      <li>Download and install Sublime Text 3</li>
+      <li>Navigate to Sublime&#39;s configuration directory -- on Linux this is probably <code>~/.config/sublime-text-3/</code>.</li>
+      <li>Copy the files from this repository&#39;s <code>sublime</code> directories into their corresponding locations in the Sublime Text config directory.</li>
+      <li>Remove the <code>sublime</code> directory from this repo.
+      <li>Profit.</li>
+    </ol>
+
+    <p>Keep in mind that, because this repository contains <code>.sublime-settings</code> files, they haven't been added to <code>.gitignore</code>. Once you've removed the sublime directory, you may want to add this line to the <code>.gitignore</code> file:
+
+    <pre><code>*.sublime-*
+    </code></pre>
+
+    <h2 id="the-foundation-branch">The Foundation Branch</h2>
+    <p>The product design firm <a href="http://zurb.com/">ZURB</a> maintains an open-source SASS/Angular framework called <a href="http://foundation.zurb.com/apps/">Foundation for Apps</a> -- it builds upon their previous work, now known as <a href="http://foundation.zurb.com/">Foundation for Sites</a>. It&#39;s still a new project and not very stable, but it shows a lot of promise. For that reason, it&#39;s included on a separate branch of this repository -- along with some extra Gulp tasks and other tweaks to get Foundation for Apps up and running.</p>
+
+  <% if (ENV == 'production') { %>
+    <script src="/app/bundle.min.js"></script>
+    <script src="/app/templates.min.js"></script>
+  <% } else { %>
+    <script src="/app/bundle.js"></script>
+    <script src="/app/templates.js"></script>
+  <% } %>
+
+    <script>
+
+      // Pass server-side application configuration to Angular here.
+      angular.module('wtfEnvironment').value('appConfig', {
+        ENV: '<%- ENV %>',
+        VERSION: '<%- VERSION %>'
+      });
+
+    </script>
+
+  </body>
+</html>

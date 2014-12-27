@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>URL Not Found</title>
+
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+  <% if (ENV == 'production') { %>
+    <link rel="stylesheet" href="/css/app.min.css"/>
+  <% } else { %>
+    <link rel="stylesheet" href="/css/app.css"/>
+  <% } %>
+
+  </head>
+
+  <body>
+
+    <div class="grid-frame vertical">
+      <div class="vertical grid-block align-center">
+        <div class="grid-container">
+          <div class="grid-block wrap">
+            <div class="grid-content shrink">
+              <h1>Uh oh!</h1>
+            </div>
+            <div class="grid-content small-12 medium-9">
+              <h1><small>We couldn't find what you were looking for.</small></h1>
+            </div>
+            <div class="grid-content small-12">
+              <h5>Your <%= error.method %> request to <%= error.url %> could not be fulfilled.</h5>
+              <br />
+            </div>
+          </div>
+        <% if (error.stack) { %>
+          <div class="grid-block">
+            <pre><%- error.stack %></pre>
+          </div>
+        <% } %>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

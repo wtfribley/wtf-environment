@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Server Error</title>
+
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+  <% if (ENV == 'production') { %>
+    <link rel="stylesheet" href="/css/app.min.css"/>
+  <% } else { %>
+    <link rel="stylesheet" href="/css/app.css"/>
+  <% } %>
+
+  </head>
+
+  <body>
+
+    <div class="grid-frame vertical">
+      <div class="vertical grid-block align-center">
+        <div class="grid-container">
+          <div class="grid-block wrap">
+            <div class="grid-content shrink">
+              <h1>Oh no!</h1>
+            </div>
+            <div class="grid-content small-12 medium-9">
+              <h1><small>The server is having some troubles.</small></h1>
+            </div>
+            <div class="grid-content small-12">
+              <h5><%= error.message %></h5>
+              <br />
+            </div>
+          </div>
+        <% if (error.stack) { %>
+          <div class="grid-block">
+            <pre><%- error.stack %></pre>
+          </div>
+        <% } %>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

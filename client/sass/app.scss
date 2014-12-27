@@ -1,0 +1,15 @@
+/**
+ * Application SASS Styles
+ *
+ * Use this file to import any vendor SASS - Foundation, Google Web Fonts, etc.
+ * or to import certain files in a specific order (like variables or mixins
+ * which must be imported before other files).
+ *
+ * All other application SASS files (those beginning with an underscore and
+ * found either in this directory, subdirectories or 'client/app' and its
+ * subdirectories), do not need to be imported -- that's handled automatically
+ * by the gulp-sass-deps plugin.
+ */
+
+// Open Sans -- Google Web Fonts
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600");

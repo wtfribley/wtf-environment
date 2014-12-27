@@ -1,0 +1,32 @@
+{
+  "SERVER": {
+    "APP": {
+      "ENTRY": "server/server.js",
+      "JS": "server/**/*.js"
+    },
+    "TEST": {
+      "UNIT": "server/test/*.js",
+      "E2E": "server/test/e2e/*.js"
+    }
+  },
+  "CLIENT": {
+    "APP": {
+      "ENTRY": "client/app/app.js",
+      "JS": "client/app/**/*.js"
+    },
+    "BUILD": "client/build",
+    "FONTS": "client/font/*.*",
+    "IMAGES": "client/img/*.*",
+    "SASS": {
+      "APP": ["client/sass/**/*.scss", "client/app/**/*.scss"],
+      "INCLUDES": []
+    },
+    "TEMPLATES": "client/*/*.html",
+    "VIEWS": "client",
+    "TEST": {
+      "UNIT": "client/test/*.js",
+      "E2E": "client/test/e2e/*.js",
+      "KARMA": []
+    }
+  }
+}
