@@ -1,7 +1,7 @@
 {
   "name": "wtf-environment",
   "version": "0.1.0",
-  "description": "everything you need to code wtf-style",
+  "description": "Everything you need to code WTF style",
   "scripts": {
     "postinstall": "bower install",
     "build": "gulp build",
