@@ -33,7 +33,7 @@ gulp.task('browserify-bundler', function() {
   bundler = browserify('./' + PATHS.CLIENT.APP.ENTRY);
 });
 
-gulp.task('browserify', ['browserify-bundler'], function() {
+gulp.task('browserify', ['browserify-bundler', 'foundation'], function() {
   return rebundle();
 });
 
@@ -44,7 +44,7 @@ gulp.task('watchify-bundler', function() {
   ));
 });
 
-gulp.task('watchify', ['watchify-bundler'], function() {
+gulp.task('watchify', ['watchify-bundler', 'foundation'], function() {
   bundler.on('update', rebundle);
 });
 

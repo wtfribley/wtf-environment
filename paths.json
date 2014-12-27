@@ -19,7 +19,7 @@
     "IMAGES": "client/img/*.*",
     "SASS": {
       "APP": ["client/sass/**/*.scss", "client/app/**/*.scss"],
-      "INCLUDES": []
+      "INCLUDES": ["bower_components/foundation-apps/scss"]
     },
     "TEMPLATES": "client/*/*.html",
     "VIEWS": "client",
@@ -28,5 +28,17 @@
       "E2E": "client/test/e2e/*.js",
       "KARMA": []
     }
+  },
+  "FOUNDATION": {
+    "BASE": "bower_components/foundation-apps/js/angular/",
+    "BUILD": "client/foundation",
+    "ICONIC": "bower_components/foundation-apps/iconic/**/*.svg",
+    "JS": "**/*.js",
+    "TEMPLATES": "components/**/*.html",
+    "DEPENDENCIES": [
+      "bower_components/fastclick/lib/fastclick.js",
+      "bower_components/viewport-units-buggyfill/viewport-units-buggyfill.js",
+      "bower_components/tether/tether.js"
+    ]
   }
 }

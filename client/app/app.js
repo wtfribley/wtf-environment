@@ -8,7 +8,8 @@
 require('../../bower_components/angular/angular');
 require('../../bower_components/angular-resource/angular-resource');
 require('../../bower_components/angular-ui-router/release/angular-ui-router');
-require('../../bower_components/angular-animate/angular-animate.js');
+require('../../bower_components/angular-animate/angular-animate');
+require('../foundation/foundation');
 
 // application
 
@@ -23,7 +24,8 @@ angular.module('wtfEnvironment', [
   // vendor
   'ngResource',
   'ui.router',
-  'ngAnimate'
+  'ngAnimate',
+  'foundation',
 
   // application
 

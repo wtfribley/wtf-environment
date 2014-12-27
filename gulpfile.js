@@ -17,6 +17,7 @@ require('./gulp/qa');
  * Build
  */
 require('./gulp/build');
+require('./gulp/build-foundation');
 
 /**
  * Development
