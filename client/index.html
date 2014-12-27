@@ -129,6 +129,14 @@
     <h2 id="the-foundation-branch">The Foundation Branch</h2>
     <p>The product design firm <a href="http://zurb.com/">ZURB</a> maintains an open-source SASS/Angular framework called <a href="http://foundation.zurb.com/apps/">Foundation for Apps</a> -- it builds upon their previous work, now known as <a href="http://foundation.zurb.com/">Foundation for Sites</a>. It&#39;s still a new project and not very stable, but it shows a lot of promise. For that reason, it&#39;s included on a separate branch of this repository -- along with some extra Gulp tasks and other tweaks to get Foundation for Apps up and running.</p>
 
+    <h4 id="gulp-foundation">gulp foundation</h4>
+    <p>This branch contains a set of Gulp tasks to build Foundation for Apps. It does everything the usual front-end build process does (HTML minifying, template caching, etc.), resulting in a single <code>foundation.js</code> file. This file is then required as a dependency in <code>client/app.js</code>.</p>
+    <p>When you run <code>gulp build</code>, Foundation for Apps is automatically built first so it can then be included in the final <code>bundle.js</code>.</p>
+
+    <h4 id="foundation-sass">Foundation SASS</h4>
+    <p>The main <code>client/sass/app.scss</code> file now specifically includes the Foundation for Apps settings file and main SASS file. Use <code>client/sass/_settings.scss</code> to change the variables Foundation uses to construct its styles.</p>
+    <p>Remember that any additional underscored SASS files (like <code>_whatever.scss</code>) do NOT need to be manually imported into <code>client/sass/app.scss</code> -- this is taken care of by the <strong>gulp-sass-deps</strong> plugin.</p>
+
   <% if (ENV == 'production') { %>
     <script src="/app/bundle.min.js"></script>
     <script src="/app/templates.min.js"></script>
