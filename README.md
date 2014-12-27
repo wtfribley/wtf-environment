@@ -109,3 +109,15 @@ Keep in mind that, because this repository contains `.sublime-settings` files, t
 ## The Foundation Branch
 
 The product design firm [ZURB](http://zurb.com/) maintains an open-source SASS/Angular framework called [Foundation for Apps](http://foundation.zurb.com/apps/) -- it builds upon their previous work, now known as [Foundation for Sites](http://foundation.zurb.com/). It's still a new project and not very stable, but it shows a lot of promise. For that reason, it's included on a separate branch of this repository -- along with some extra Gulp tasks and other tweaks to get Foundation for Apps up and running.
+
+#### gulp foundation
+
+This branch contains a set of Gulp tasks to build Foundation for Apps. It does everything the usual front-end build process does (HTML minifying, template caching, etc.), resulting in a single `foundation.js` file. This file is then required as a dependency in `client/app.js`.
+
+When you run `gulp build`, Foundation for Apps is automatically built first so it can then be included in the final `bundle.js`.
+
+#### Foundation SASS
+
+The main `client/sass/app.scss` file now specifically includes the Foundation for Apps settings file and main SASS file. Use `client/sass/_settings.scss` to change the variables Foundation uses to construct its styles.
+
+Remember that any additional underscored SASS files (like `_whatever.scss`) do NOT need to be manually imported into `client/sass/app.scss` -- this is taken care of by the **gulp-sass-deps** plugin.
