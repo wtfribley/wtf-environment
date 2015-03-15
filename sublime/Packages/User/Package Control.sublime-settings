@@ -2,7 +2,7 @@
 	"installed_packages":
 	[
 		"DocBlockr",
-		"EditorConfig"
+		"EditorConfig",
 		"GitGutter",
 		"MarkdownEditing",
 		"Origami",
