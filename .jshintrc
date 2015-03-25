@@ -15,6 +15,5 @@
   "eqnull": true, // allow `x == null` as a shortcut for `(x === null || x === void 0)`
   "expr": true, // allow things like `x || (x = 8)`
   "funcscope": true,
-  "laxbreak": true, // allow multi-line ternary operator.
-  "predef": ["angular", "require", "module", "console"]
+  "laxbreak": true // allow multi-line ternary operator.
 }

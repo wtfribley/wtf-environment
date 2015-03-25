@@ -8,7 +8,7 @@ var jscs = require('gulp-jscs');
 var mocha = require('gulp-mocha');
 var karma = require('gulp-karma');
 
-var PATHS = require('../paths.json');
+var PATHS = require('../../paths.json');
 
 /**
  * Server

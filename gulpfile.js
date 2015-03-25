@@ -7,24 +7,23 @@ var livereload = require('gulp-livereload');
 var spawn = require('child_process').spawn;
 
 var PATHS = require('./paths.json');
+var appServer;
 
 /**
- * QA
+ * QA Tasks
  */
-require('./gulp/qa');
+require('./tools/tasks/qa');
 
 /**
- * Build
+ * Build Tasks
  */
-require('./gulp/build');
+require('./tools/tasks/build');
 
 /**
- * Development
+ * Development Tasks
  */
 
 // Application Server
-var appServer;
-
 gulp.task('server', function() {
   if (appServer) appServer.kill();
 
@@ -33,7 +32,10 @@ gulp.task('server', function() {
   appServer.on('close', function(code) {
     if (code != 143) {
       gutil.log('Application server stopped with code: ' + code);
-      gutil.log('The server will restart when you change a file.');
+
+      if (livereload.server) {
+        gutil.log('The server will restart when you change a file.');
+      }
     }
   });
 });
@@ -68,9 +70,7 @@ gulp.task('watch', ['watchify'/*, 'client-unit-test-watch'*/], function() {
 
 gulp.task('default', ['test', 'build', 'server', 'watch']);
 
-/*!
- * no zombie servers!
- */
+// no zombie servers!
 process.on('exit', function() {
   if (appServer) appServer.kill();
   if (livereload.server) livereload.server.close();

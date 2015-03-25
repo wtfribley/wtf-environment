@@ -1,14 +1,4 @@
 {
-  "SERVER": {
-    "APP": {
-      "ENTRY": "server/server.js",
-      "JS": "server/**/*.js"
-    },
-    "TEST": {
-      "UNIT": "server/test/*.js",
-      "E2E": "server/test/e2e/*.js"
-    }
-  },
   "CLIENT": {
     "APP": {
       "ENTRY": "client/app/app.js",
@@ -27,6 +17,16 @@
       "UNIT": "client/test/*.js",
       "E2E": "client/test/e2e/*.js",
       "KARMA": []
+    }
+  },
+  "SERVER": {
+    "APP": {
+      "ENTRY": "server/server.js",
+      "JS": "server/**/*.js"
+    },
+    "TEST": {
+      "UNIT": "server/test/*.js",
+      "E2E": "server/test/e2e/*.js"
     }
   }
 }

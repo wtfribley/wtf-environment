@@ -14,13 +14,13 @@ var ngAnnotate = require('gulp-ng-annotate');
 var ngHtml2Js = require('gulp-ng-html2js');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
-var sassDeps = require('./gulp-sass-deps');
+var sassDeps = require('../plugins/gulp-sass-deps');
 var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
 
-var PACKAGE = require('../package.json');
-var PATHS = require('../paths.json');
+var PACKAGE = require('../../package.json');
+var PATHS = require('../../paths.json');
 
 /**
  * Browserify
