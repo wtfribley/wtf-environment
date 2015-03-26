@@ -3,6 +3,5 @@
 *.log
 *.pyc
 node_modules
-bower_components
+server/build
 client/build
-client/foundation

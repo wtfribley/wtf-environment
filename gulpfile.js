@@ -4,6 +4,7 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var livereload = require('gulp-livereload');
+var path = require('path');
 var spawn = require('child_process').spawn;
 
 var PATHS = require('./paths.json');
@@ -24,7 +25,7 @@ require('./tools/tasks/build');
  */
 
 // Application Server
-gulp.task('server', function() {
+gulp.task('server', ['server-build'], function() {
   if (appServer) appServer.kill();
 
   appServer = spawn('node', [PATHS.SERVER.APP.ENTRY], {stdio: 'inherit'});
@@ -68,7 +69,7 @@ gulp.task('watch', ['watchify'/*, 'client-unit-test-watch'*/], function() {
   });
 });
 
-gulp.task('default', ['test', 'build', 'server', 'watch']);
+gulp.task('default', ['test', 'client-build', 'server', 'watch']);
 
 // no zombie servers!
 process.on('exit', function() {

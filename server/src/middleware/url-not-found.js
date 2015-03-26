@@ -3,7 +3,7 @@
  * /server/middleware/url-not-found.js]
  */
 
-module.exports = function(req, res, next) {
+export default function(req, res, next) {
   var error = new Error('Cannot ' + req.method + ' ' + req.url);
 
   error.status = 404;
@@ -11,4 +11,4 @@ module.exports = function(req, res, next) {
   error.url = req.url;
 
   next(error);
-};
+}

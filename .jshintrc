@@ -15,5 +15,6 @@
   "eqnull": true, // allow `x == null` as a shortcut for `(x === null || x === void 0)`
   "expr": true, // allow things like `x || (x = 8)`
   "funcscope": true,
-  "laxbreak": true // allow multi-line ternary operator.
+  "laxbreak": true, // allow multi-line ternary operator.
+  "esnext": true
 }

@@ -1,22 +1,20 @@
 /*!
  * module dependencies
  */
-var compression = require('compression');
-var ejs = require('ejs').renderFile;
-var errorHandler = require('./middleware/error-handler');
-var express = require('express');
-var favicon = require('serve-favicon');
-var path = require('path');
-var serveStatic = require('serve-static');
-var urlNotFound = require('./middleware/url-not-found');
+import compression from 'compression';
+import {renderFile as ejs} from 'ejs';
+import errorHandler from './middleware/error-handler';
+import express from 'express';
+import favicon from 'serve-favicon';
+import path from 'path';
+import serveStatic from 'serve-static';
+import urlNotFound from './middleware/url-not-found';
 
-/*!
- * constants
- */
-var PACKAGE = require('../package.json');
-var PATHS = require('../paths.json');
-var STATIC = path.resolve(__dirname, '..', PATHS.CLIENT.BUILD);
-var VIEWS = path.resolve(__dirname, '..', PATHS.CLIENT.VIEWS);
+import PACKAGE from '../../package.json';
+import PATHS from '../../paths.json';
+import {path as ROOT} from 'app-root-path';
+const STATIC = path.resolve(ROOT, PATHS.CLIENT.BUILD);
+const VIEWS = path.resolve(ROOT, PATHS.CLIENT.VIEWS);
 
 /**
  * Server Application
@@ -79,4 +77,4 @@ if (require.main === module) {
   app.start();
 }
 
-module.exports = app;
+export default app;

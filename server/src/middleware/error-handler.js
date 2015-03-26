@@ -1,18 +1,11 @@
 /*!
- * module dependencies
  * adapted from (errorhandler)[https://github.com/expressjs/errorhandler]
  */
-var accepts = require('accepts');
+import accepts from 'accepts';
 
-/*!
- * constants
- */
-var ENV = process.env.NODE_ENV || 'development';
+const ENV = process.env.NODE_ENV || 'development';
 
-/**
- * Error handler
- */
-function errorHandler(err, req, res, next) {
+export default function errorHandler(err, req, res, next) {
 
   // respect err.status; default status is 500.
   if (err.status) res.statusCode = err.status;
@@ -47,9 +40,19 @@ function errorHandler(err, req, res, next) {
 
       // this results in an infinite loop if there is no 500.html view...
       // so make sure you have a 500.html view!
-      if (err) {
+      if (err && res.statusCode !== 500) {
         err.status = 500;
         return errorHandler(err, req, res, next);
+      }
+      else if (err) {
+        html = `<!DOCTYPE html><html>
+          <head>
+            <title>Server Error</title>
+          </head>
+          <body><h1>Server Error</h1>
+            <h3>Likely caused by missing error page</h3>
+            <p>Make sure <code>${res.app.get('views')}</code> is correct.</p>
+          </body></html>`;
       }
 
       res.send(html);
@@ -68,8 +71,3 @@ function errorHandler(err, req, res, next) {
     return res.send(error.message);
   }
 }
-
-/*!
- * exports
- */
-module.exports = errorHandler;

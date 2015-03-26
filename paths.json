@@ -1,8 +1,8 @@
 {
   "CLIENT": {
     "APP": {
-      "ENTRY": "client/app/app.js",
-      "JS": "client/app/**/*.js"
+      "ENTRY": "client/src/app.js",
+      "JS": "client/src/**/*.js"
     },
     "BUILD": "client/build",
     "FONTS": "client/font/*.*",
@@ -21,9 +21,10 @@
   },
   "SERVER": {
     "APP": {
-      "ENTRY": "server/server.js",
-      "JS": "server/**/*.js"
+      "ENTRY": "server/build/server.js",
+      "JS": "server/src/**/*.js"
     },
+    "BUILD": "server/build",
     "TEST": {
       "UNIT": "server/test/*.js",
       "E2E": "server/test/e2e/*.js"

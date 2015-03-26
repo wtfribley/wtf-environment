@@ -4,13 +4,14 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 
+var babel = require('gulp-babel');
+var babelify = require('babelify');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var concat = require('gulp-concat');
 var livereload = require('gulp-livereload');
 var minifyCss = require('gulp-minify-css');
 var minifyHtml = require('gulp-minify-html');
-var ngAnnotate = require('gulp-ng-annotate');
 var ngHtml2Js = require('gulp-ng-html2js');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
@@ -23,14 +24,23 @@ var PACKAGE = require('../../package.json');
 var PATHS = require('../../paths.json');
 
 /**
+ * Babel (for server-side ES6)
+ */
+gulp.task('babel', function() {
+  return gulp.src(PATHS.SERVER.APP.JS)
+    .pipe(babel())
+    .pipe(gulp.dest(PATHS.SERVER.BUILD));
+})
+
+/**
  * Browserify
  *
- * (with watching via Watchify & minification via Uglify)
+ * (with watching via Watchify & ES6 via babelify)
  */
 var bundler;
 
 gulp.task('browserify-bundler', function() {
-  bundler = browserify('./' + PATHS.CLIENT.APP.ENTRY);
+  bundler = browserify({debug: true});
 });
 
 gulp.task('browserify', ['browserify-bundler'], function() {
@@ -38,10 +48,8 @@ gulp.task('browserify', ['browserify-bundler'], function() {
 });
 
 gulp.task('watchify-bundler', function() {
-  bundler = watchify(browserify(
-    './' + PATHS.CLIENT.APP.ENTRY,
-    watchify.args
-  ));
+  watchify.args.debug = true;
+  bundler = watchify(browserify(watchify.args));
 });
 
 gulp.task('watchify', ['watchify-bundler'], function() {
@@ -49,15 +57,17 @@ gulp.task('watchify', ['watchify-bundler'], function() {
 });
 
 function rebundle() {
-  return bundler.bundle()
+  return bundler
+    .transform(babelify.configure({
+      blacklist: ['es6.modules']
+    }))
+    .require('./' + PATHS.CLIENT.APP.ENTRY, {entry: true})
+    .bundle()
     .on('error', function(err) {
       gutil.log('browserify error:', err.message);
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
-    .pipe(ngAnnotate({add: true, single_quote: true}))
-    // jscs:enable
     .pipe(gulp.dest(PATHS.CLIENT.BUILD + '/app'))
     .pipe(livereload())
     .pipe(rename('bundle.min.js'))
@@ -143,10 +153,15 @@ gulp.task('templates', function() {
 /**
  * Build
  */
-gulp.task('build', [
+gulp.task('server-build', ['babel']);
+
+gulp.task('client-build', [
+  'babel',
   'browserify',
   'fonts',
   'images',
   'sass',
   'templates'
 ]);
+
+gulp.task('build', ['server-build', 'client-build']);
