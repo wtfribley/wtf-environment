@@ -1,11 +1,11 @@
 /*!
  * adapted from (errorhandler)[https://github.com/expressjs/errorhandler]
  */
-import accepts from 'accepts';
+var accepts = require('accepts');
 
 const ENV = process.env.NODE_ENV || 'development';
 
-export default function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res, next) {
 
   // respect err.status; default status is 500.
   if (err.status) res.statusCode = err.status;
@@ -71,3 +71,5 @@ export default function errorHandler(err, req, res, next) {
     return res.send(error.message);
   }
 }
+
+module.exports = errorHandler;

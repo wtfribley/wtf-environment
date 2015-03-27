@@ -28,7 +28,9 @@ var PATHS = require('../../paths.json');
  */
 gulp.task('babel', function() {
   return gulp.src(PATHS.SERVER.APP.JS)
-    .pipe(babel())
+    .pipe(babel({
+      blacklist: ['es6.modules']
+    }))
     .pipe(gulp.dest(PATHS.SERVER.BUILD));
 })
 

@@ -49,7 +49,9 @@ gulp.task('client-lint', function() {
     PATHS.CLIENT.TEST.UNIT,
     PATHS.CLIENT.TEST.E2E
   ])
-    .pipe(jshint())
+    .pipe(jshint({
+      browserify: true
+    }))
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jscs());
 });

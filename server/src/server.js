@@ -1,18 +1,16 @@
-/*!
- * module dependencies
- */
-import compression from 'compression';
-import {renderFile as ejs} from 'ejs';
-import errorHandler from './middleware/error-handler';
-import express from 'express';
-import favicon from 'serve-favicon';
-import path from 'path';
-import serveStatic from 'serve-static';
-import urlNotFound from './middleware/url-not-found';
+var compression = require('compression');
+var ejs = require('ejs').renderFile;
+var errorHandler = require('./middleware/error-handler');
+var express = require('express');
+var favicon = require('serve-favicon');
+var fs = require('fs');
+var path = require('path');
+var serveStatic = require('serve-static');
+var urlNotFound = require('./middleware/url-not-found');
 
-import PACKAGE from '../../package.json';
-import PATHS from '../../paths.json';
-import {path as ROOT} from 'app-root-path';
+const ROOT = require('app-root-path').path;
+const PACKAGE = require(path.join(ROOT, 'package.json'));
+const PATHS = require(path.join(ROOT, 'paths.json'));
 const STATIC = path.resolve(ROOT, PATHS.CLIENT.BUILD);
 const VIEWS = path.resolve(ROOT, PATHS.CLIENT.VIEWS);
 
@@ -35,8 +33,24 @@ app.engine('html', ejs);
 app.set('view engine', 'html');
 app.set('views', VIEWS);
 
-// favicon.ico -- uncomment after creating 'client/img/favicon.ico'
-// app.use(favicon(path.join(STATIC, 'img', 'favicon.ico')));
+// favicon
+const FAVICON_PATH = path.join(STATIC, 'img', 'favicon.ico');
+try {
+  var faviconStat = fs.statSync(FAVICON_PATH);
+
+  if (faviconStat.isFile()) {
+    app.use(favicon(FAVICON_PATH));
+  }
+}
+catch (statErr) {
+  var faviconSrc = path.resolve(
+    ROOT,
+    path.dirname(PATHS.CLIENT.IMAGES),
+    'favicon.ico'
+  );
+
+  console.log(`Create ${faviconSrc} to enable the favicon middleware`);
+}
 
 // request pre-processing middleware
 app.use(compression());
@@ -77,4 +91,4 @@ if (require.main === module) {
   app.start();
 }
 
-export default app;
+module.exports = app;
